@@ -11,10 +11,10 @@
     "deploy": "hardhat run script/deploy.ts"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^7.0.0",
     "@openzeppelin/contracts": "^5.1.0",
     "dotenv": "^16.4.0",
-    "hardhat": "^2.22.0",
+    "hardhat": "^3.12.0",
     "solhint": "^5.0.0",
     "typescript": "^5.7.0",
     "ts-node": "^10.9.0"
