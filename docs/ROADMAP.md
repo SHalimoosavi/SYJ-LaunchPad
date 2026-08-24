@@ -7,9 +7,11 @@ documented.
 - [x] **Phase 1 — Foundation.** Monorepo scaffold, backend app factory +
       config + DB session plumbing, frontend app shell, contracts workspace,
       Docker Compose (Postgres), GitHub Actions CI, environment templates.
-- [ ] **Phase 2 — Wallet Authentication.** SIWE-style (EIP-4361) signature
-      auth, nonce issuance + replay protection, JWT session issuance,
-      wagmi/RainbowKit wallet connect on the frontend.
+- [x] **Phase 2 — Wallet Authentication.** SIWE (EIP-4361) sign-in: nonce
+      issuance with persisted, single-use replay protection; full
+      cryptographic signature verification (domain, chain, expiry, nonce);
+      JWT session issuance; RainbowKit custom authentication adapter wired
+      end-to-end on the frontend, with session restore on page load.
 - [ ] **Phase 3 — Core Data Model.** Users, Wallets, Projects, Sales,
       Purchases, Claims, Transactions, Whitelist, Referral Rewards, Audit
       Logs, Notifications, Settings — normalized schema + Alembic migrations.

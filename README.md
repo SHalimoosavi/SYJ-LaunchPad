@@ -3,7 +3,7 @@
 Open-source, self-hosted Web3 token launchpad. Deploy your own presale/IDO
 platform from your own website — no third-party launchpad, no platform fees.
 
-> **Status:** Phase 1 — foundational architecture. See [docs/ROADMAP.md](docs/ROADMAP.md).
+> **Status:** Phase 2 — wallet authentication complete and verified.
 
 ## Monorepo Layout
 

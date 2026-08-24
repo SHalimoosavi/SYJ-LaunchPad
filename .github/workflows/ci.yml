@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -41,8 +41,8 @@ jobs:
           python-version: "3.12"
           cache: "pip"
       - run: pip install -e ".[dev]"
-      - run: ruff check app
-      - run: mypy app
+      - run: ruff check .
+      - run: mypy --strict .
       - run: pytest --cov=app --cov-report=term-missing
 
   frontend:
