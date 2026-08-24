@@ -29,12 +29,29 @@ class Settings(BaseSettings):
     jwt_algorithm: str = Field(default="HS256")
     access_token_expire_minutes: int = Field(default=60)
     siwe_nonce_ttl_seconds: int = Field(default=300)
+    siwe_domain: str = Field(default="localhost:3000")
+    siwe_uri: str = Field(default="http://localhost:3000")
 
     # --- Rate limiting ---
     rate_limit_default: str = Field(default="100/minute")
 
     # --- Chains ---
     enabled_chain_ids: str = Field(default="1")
+
+    # Per-chain RPC URLs. Declared explicitly (rather than read from
+    # os.environ ad hoc) so every config value in the app flows through
+    # this one Settings model — matches the module-level contract stated
+    # above. One field per chain in `app.core.chains.SUPPORTED_CHAINS`;
+    # pydantic-settings maps each to its `RPC_URL_<id>` env var by name.
+    rpc_url_1: str | None = Field(default=None)
+    rpc_url_56: str | None = Field(default=None)
+    rpc_url_137: str | None = Field(default=None)
+    rpc_url_8453: str | None = Field(default=None)
+    rpc_url_42161: str | None = Field(default=None)
+    rpc_url_10: str | None = Field(default=None)
+    rpc_url_43114: str | None = Field(default=None)
+    rpc_url_11155111: str | None = Field(default=None)
+    rpc_url_97: str | None = Field(default=None)
 
     @field_validator("environment")
     @classmethod
@@ -53,9 +70,25 @@ class Settings(BaseSettings):
         return [int(c.strip()) for c in self.enabled_chain_ids.split(",") if c.strip()]
 
     def rpc_url_for(self, chain_id: int) -> str | None:
-        import os
+        """Look up the configured RPC URL for a chain, if any is set.
 
-        return os.environ.get(f"RPC_URL_{chain_id}") or None
+        Reads only from this Settings instance's own declared fields —
+        never from `os.environ` directly — so RPC configuration goes
+        through the same single, auditable, type-checked path as every
+        other setting in this module.
+        """
+        rpc_urls_by_chain_id: dict[int, str | None] = {
+            1: self.rpc_url_1,
+            56: self.rpc_url_56,
+            137: self.rpc_url_137,
+            8453: self.rpc_url_8453,
+            42161: self.rpc_url_42161,
+            10: self.rpc_url_10,
+            43114: self.rpc_url_43114,
+            11155111: self.rpc_url_11155111,
+            97: self.rpc_url_97,
+        }
+        return rpc_urls_by_chain_id.get(chain_id) or None
 
     @property
     def is_production(self) -> bool:

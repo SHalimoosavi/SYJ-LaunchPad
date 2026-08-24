@@ -13,6 +13,7 @@ dependencies = [
     "pydantic-settings>=2.6",
     "python-jose[cryptography]>=3.3",
     "passlib[bcrypt]>=1.7",
+    "siwe>=4.4",
     "eth-account>=0.13",
     "web3>=7.4",
     "slowapi>=0.1.9",
@@ -40,6 +41,7 @@ include = ["app*"]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+extend-exclude = ["alembic/versions"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
@@ -54,4 +56,6 @@ ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
 testpaths = ["app"]
