@@ -43,6 +43,7 @@ jobs:
       - run: pip install -e ".[dev]"
       - run: ruff check .
       - run: mypy --strict .
+      - run: alembic upgrade head
       - run: pytest --cov=app --cov-report=term-missing
 
   frontend:
