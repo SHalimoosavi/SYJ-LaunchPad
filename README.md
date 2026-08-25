@@ -3,7 +3,7 @@
 Open-source, self-hosted Web3 token launchpad. Deploy your own presale/IDO
 platform from your own website — no third-party launchpad, no platform fees.
 
-> **Status:** Phase 2 — wallet authentication complete and verified.
+> **Status:** Phase 1 — foundational architecture. See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Monorepo Layout
 
@@ -35,11 +35,15 @@ syj-launchpad/
 
 ## Quick start (local dev)
 
-Requirements: Docker + Docker Compose, Node 20+, Python 3.12+.
+Requirements: Node 20+, Python 3.12+, and Postgres — either via Docker or a
+native install. **Database setup is a required first step and is not
+optional** — see [docs/DATABASE_SETUP.md](docs/DATABASE_SETUP.md) for exact,
+tested commands for both paths (Docker and native Windows/macOS/Linux). The
+short version, if you're using Docker:
 
 ```bash
 cp .env.example .env
-docker compose up -d          # postgres
+docker compose up -d          # postgres — creates the syj/syj_launchpad db automatically
 cd backend && cp .env.example .env && pip install -e ".[dev]"
 alembic upgrade head
 uvicorn app.main:app --reload
