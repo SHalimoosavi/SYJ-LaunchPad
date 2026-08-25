@@ -12,9 +12,21 @@ documented.
       cryptographic signature verification (domain, chain, expiry, nonce);
       JWT session issuance; RainbowKit custom authentication adapter wired
       end-to-end on the frontend, with session restore on page load.
-- [ ] **Phase 3 — Core Data Model.** Users, Wallets, Projects, Sales,
-      Purchases, Claims, Transactions, Whitelist, Referral Rewards, Audit
-      Logs, Notifications, Settings — normalized schema + Alembic migrations.
+- [x] **Phase 3 — Core Data Model.** Normalized schema for Users, Wallets
+      (from Phase 2), Projects, Sales, Purchases, Claims, Transactions,
+      Whitelist, Referral Rewards, Audit Logs, Notifications, Settings.
+      *History note: this phase was first implemented and shipped as
+      "Project Registration" — the `Project` entity alone, with a full
+      ownership-enforced API (create/list-own/get-own/update-own,
+      404-not-403 cross-user isolation) — then extended to the complete
+      12-entity Core Data Model. The Project Registration work was kept
+      as-is, not rewritten, when the phase's scope was clarified.*
+      The remaining 9 entities are schema/migration/persistence-tested
+      only — no new API routes, no business logic (sale execution, claim
+      settlement, referral payout, etc. are Phase 5–7). Alembic migration
+      chain verified upgrade AND full downgrade-to-base AND re-upgrade
+      against a genuinely fresh Postgres database. Token/tokenomics/
+      presale-execution fields deliberately excluded — Phase 4+.
 - [ ] **Phase 4 — Smart Contracts.** ERC20 template, Presale, Treasury, Claim,
       Vesting, Referral, Ownable/Pausable mixins; Foundry + Hardhat test
       suites; static analysis (Slither) in CI.

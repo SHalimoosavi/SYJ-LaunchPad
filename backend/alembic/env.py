@@ -12,6 +12,8 @@ from app.db.base import Base
 # Import every feature's models here so Base.metadata is fully populated
 # before autogenerate runs.
 from app.features.auth import models as auth_models  # noqa: F401,E402
+from app.features.core_data import models as core_data_models  # noqa: F401,E402
+from app.features.projects import models as projects_models  # noqa: F401,E402
 
 config = context.config
 if config.config_file_name is not None:

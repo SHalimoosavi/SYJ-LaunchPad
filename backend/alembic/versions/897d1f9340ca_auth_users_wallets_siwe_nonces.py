@@ -57,3 +57,12 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_siwe_nonces_value'), table_name='siwe_nonces')
     op.drop_table('siwe_nonces')
     # ### end Alembic commands ###
+
+    # NOT auto-generated: same fix as applied in the later core_data
+    # migration (fcb02142d0b6) — Alembic's autogenerate drops the TABLE
+    # that used a Postgres native enum type but never drops the TYPE
+    # itself, which has an independent lifecycle in Postgres. Left
+    # unfixed, `alembic downgrade base` followed by `alembic upgrade head`
+    # fails with `DuplicateObjectError: type "user_role" already exists`.
+    # Must run after the table that used it ('users') has been dropped.
+    sa.Enum(name='user_role').drop(op.get_bind(), checkfirst=True)
