@@ -22,11 +22,20 @@ dist/
 *.tsbuildinfo
 
 # --- Contracts ---
+# --- Contracts (Hardhat) ---
 contracts/artifacts/
 contracts/cache/
 contracts/typechain-types/
 contracts/coverage/
 contracts/coverage.json
+
+# --- Contracts (Foundry) ---
+contracts/out/
+contracts/cache-forge/
+# forge-std (and any future forge dependency) is fetched via `forge
+# install`, not vendored — same convention as node_modules/.venv being
+# reinstalled by CI rather than committed.
+contracts/lib/
 
 # --- OS / editor ---
 .DS_Store
