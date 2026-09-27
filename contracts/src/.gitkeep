@@ -1,0 +1,16 @@
+This file exists only so `contracts/src/` is tracked by git — Git does
+not track empty directories. It has no other purpose and should be
+deleted the moment the first real contract source file is added here.
+
+Root cause this fixes: on a genuinely fresh clone (e.g. CI's checkout,
+or anyone cloning this repo for the first time), `contracts/src/` did
+not exist at all, because it was never actually committed — only ever
+present locally, in every developer's working copy, by coincidence.
+`contracts/scripts/run-slither.sh` correctly detects a missing `src/`
+directory as an anomaly and fails loudly (`exit 1`) rather than silently
+treating it the same as "empty but present" — which is exactly what
+surfaced this. See docs/CONTRACTS_TOOLCHAIN.md.
+
+Verified: reproduced the exact `exit 1` failure from a genuinely fresh
+`git clone` (contracts/src/ did not exist; `git ls-tree` confirmed it
+was never tracked), then confirmed this file resolves it.

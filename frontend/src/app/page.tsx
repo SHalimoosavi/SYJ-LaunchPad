@@ -1,17 +1,23 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-
-import { ApiStatus } from "@/components/ApiStatus";
+import { Header } from "@/components/Header";
+import { ProjectRegistration } from "@/components/ProjectRegistration";
+import { StatusStrip } from "@/components/StatusStrip";
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-8 p-8">
-      <h1 className="text-3xl font-semibold tracking-tight">SYJ LaunchPad</h1>
-      <p className="max-w-md text-center text-neutral-500">
-        Open-source, self-hosted Web3 token launchpad. Phase 1 scaffold — wallet
-        connect and API wiring are live; presale features land in later phases.
-      </p>
-      <ConnectButton />
-      <ApiStatus />
-    </main>
+    <div className="min-h-screen">
+      <Header />
+      <StatusStrip />
+      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+        <div className="mb-6">
+          <h1 className="text-xl font-semibold tracking-tight">Dashboard</h1>
+          <p className="mt-1 text-sm text-neutral-500">
+            Register and manage your LaunchPad projects. Presale, token, and
+            claim features arrive in later phases once their parameters are
+            defined — see the project roadmap.
+          </p>
+        </div>
+        <ProjectRegistration />
+      </main>
+    </div>
   );
 }

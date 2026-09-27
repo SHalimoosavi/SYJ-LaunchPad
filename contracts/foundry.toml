@@ -1,0 +1,42 @@
+[profile.default]
+# Foundry and Hardhat share the same contract SOURCE tree (contracts are
+# contracts regardless of which tool built them) and the same test/
+# directory (Foundry's .t.sol files and Hardhat's .ts files don't collide
+# by extension). Build ARTIFACTS are kept in tool-specific directories
+# (out/ + cache-forge/ here vs. Hardhat's artifacts/ + cache/ in
+# hardhat.config.ts) so neither tool's compiler cache/output clobbers the
+# other's.
+src = "src"
+test = "test"
+out = "out"
+cache_path = "cache-forge"
+libs = ["lib"]
+
+solc_version = "0.8.28"
+evm_version = "paris"
+optimizer = true
+optimizer_runs = 200
+
+# Matches Hardhat's own optimizer/solc settings in hardhat.config.ts so a
+# contract compiled by either toolchain produces equivalent bytecode.
+
+[fuzz]
+runs = 256
+
+[invariant]
+runs = 128
+depth = 50
+
+[fmt]
+line_length = 100
+tab_width = 4
+quote_style = "double"
+
+# RPC endpoints are intentionally NOT configured here. Per the Phase 4
+# checkpoint-0 gate, target deployment chain(s) are still UNKNOWN/BLOCKED
+# pending authoritative project requirements — no RPC URL, chain ID, or
+# network alias is hardcoded anywhere in this file. When a target chain is
+# approved, its RPC URL is added the same way the rest of this repo
+# handles chain config: via an environment variable
+# (RPC_URL_<chain_id>, matching backend/app/core/chains.py and
+# frontend/src/config/chains.ts), never a literal value committed here.

@@ -8,7 +8,11 @@
     "coverage": "hardhat coverage",
     "lint": "solhint 'src/**/*.sol'",
     "node": "hardhat node",
-    "deploy": "hardhat run script/deploy.ts"
+    "deploy": "hardhat run script/deploy.ts",
+    "forge:install": "forge install foundry-rs/forge-std --no-git --no-commit",
+    "forge:build": "forge build",
+    "forge:test": "forge test -vv",
+    "slither": "bash scripts/run-slither.sh"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",

@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 
 import { apiFetch } from "@/lib/api";
 
+import { StatusDot } from "./StatusDot";
+
 interface HealthResponse {
   status: string;
   environment: string;
@@ -17,17 +19,27 @@ export function ApiStatus() {
   });
 
   if (isLoading) {
-    return <div className="animate-pulse text-sm text-neutral-500">Checking API…</div>;
+    return (
+      <span className="flex items-center gap-1.5 text-neutral-500">
+        <StatusDot state="pending" />
+        Checking API…
+      </span>
+    );
   }
 
   if (isError || !data) {
-    return <div className="text-sm text-red-500">API unreachable</div>;
+    return (
+      <span className="flex items-center gap-1.5 text-red-500">
+        <StatusDot state="error" />
+        API unreachable
+      </span>
+    );
   }
 
   return (
-    <div className="text-sm text-neutral-500">
-      API: <span className="font-medium text-green-500">{data.status}</span> ·{" "}
-      {data.environment} · db: {data.database}
-    </div>
+    <span className="flex items-center gap-1.5 text-neutral-500">
+      <StatusDot state="ok" />
+      API {data.status} · {data.environment} · db {data.database}
+    </span>
   );
 }
