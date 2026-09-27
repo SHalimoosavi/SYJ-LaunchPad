@@ -68,13 +68,14 @@ jobs:
       - run: npm run build
 
   contracts:
-    name: Contracts (compile, test)
+    name: Contracts (Hardhat + Foundry + Slither)
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: contracts
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -83,3 +84,25 @@ jobs:
       - run: npm ci
       - run: npx hardhat compile
       - run: npx hardhat test
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Install forge-std
+        run: forge install foundry-rs/forge-std --no-git --no-commit
+
+      - run: forge build
+      - run: forge test -vv
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Slither
+        run: pip install slither-analyzer
+
+      - name: Slither static analysis
+        run: |
+          # See contracts/scripts/run-slither.sh: skips cleanly (exit 0,
+          # not a failure) until src/ has real contract source, then
+          # activates itself automatically — no future CI edit needed.
+          bash scripts/run-slither.sh
